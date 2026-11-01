@@ -27,10 +27,10 @@ test('6초마다 다음 슬라이드로 넘어간다', async () => {
 
 test('마우스가 올라가 있으면 넘어가지 않고, 벗어나면 다시 시작한다', async () => {
   await setup();
-  fireEvent.mouseEnter(hero().closest('section'));
+  fireEvent.mouseEnter(hero());
   tick(20000);
   expect(hero()).toHaveTextContent('웹소설 공모전');
-  fireEvent.mouseLeave(hero().closest('section'));
+  fireEvent.mouseLeave(hero());
   tick(6000);
   expect(hero()).toHaveTextContent('인기작');
 });

@@ -9,7 +9,7 @@ const setup = () => render(<MemoryRouter><SignupBox /></MemoryRouter>);
 
 const answer = (placeholder, value) => {
   fireEvent.change(screen.getByPlaceholderText(placeholder), { target: { value } });
-  fireEvent.submit(screen.getByPlaceholderText(placeholder).closest('form'));
+  fireEvent.click(screen.getByRole('button', { name: /^(다음|가입하기)$/ }));
 };
 
 const fillAll = () => {
@@ -57,7 +57,7 @@ test('마지막 단계에서 가입 요청을 보내고 완료 화면을 보여�
   postSignUp.mockResolvedValue(true);
   setup();
   fillAll();
-  await waitFor(() => expect(screen.getByText('길동님, 환영합니다')).toBeInTheDocument());
+  expect(await screen.findByText('길동님, 환영합니다')).toBeInTheDocument();
   expect(postSignUp).toHaveBeenCalledWith({
     email: 'reader@example.com',
     password: 'abcd123!',

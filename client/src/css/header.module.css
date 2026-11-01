@@ -18,9 +18,12 @@
 }
 
 .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-weight: 700;
     font-size: 19px;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.06em;
     white-space: nowrap;
 }
 

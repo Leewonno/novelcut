@@ -1,26 +1,34 @@
 import { useState, useEffect } from "react";
 import main from "../css/main.module.css";
-import slide from "../image/1.png"
-import slide2 from "../image/2.png"
-import slide3 from "../image/3.png"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import { faMarker } from "@fortawesome/free-solid-svg-icons";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { faFire } from "@fortawesome/free-solid-svg-icons";
-import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
-import { faClock } from "@fortawesome/free-solid-svg-icons";
 import A from "../atom/A";
+import NovelRow from "../molecule/NovelRow";
 import { getPopularNovelList, getReconetNovelList } from "./common/getData";
 
+const contestSlide = {
+  eyebrow: "2023 웹소설 공모전 · 로맨스 / 로판",
+  title: <>지상최대<br />웹소설 공모전</>,
+  desc: <>2ROUND 지금은 예심 기간!<br />10월 24일 화요일 최종심 진출작 발표!</>,
+  cta: "공모전 참여작 감상하기",
+  url: "/sort",
+};
 
 export default function NewMain() {
 
-  const [slideImg, setSlideImg] = useState([]);
   const [slideCount, setSlideCount] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const [recentNovel, setRecentNovel] = useState([]);
   const [popularNovel, setPopularNovel] = useState([]);
+
+  const topNovel = popularNovel[0];
+  const slides = topNovel ? [contestSlide, {
+    eyebrow: "추천작",
+    title: topNovel.title,
+    desc: "독자들이 가장 많이 찾은 인기 연재작.",
+    cta: "첫 화 보기",
+    url: topNovel.round > 0 ? "/n/" + topNovel.title + "/detail?round=1" : "/n/" + topNovel.title,
+  }] : [contestSlide];
+  const slideLength = slides.length;
+  const current = slides[slideCount % slideLength];
 
   useEffect(() => {
     const getRecentData = async () => {
@@ -34,87 +42,109 @@ export default function NewMain() {
     }
     getRecentData();
     getPopularData();
-    setSlideImg([slide, slide2, slide3, slide2, slide3]);
   }, []);
 
+  // 슬라이드 위에 마우스나 포커스가 있으면 멈추고, 수동으로 넘기면 타이머를 다시 시작한다
+  useEffect(() => {
+    if (isPaused) {
+      return;
+    }
+    const timer = setInterval(() => {
+      setSlideCount((nextCount) => (nextCount + 1) % slideLength);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [slideLength, isPaused, slideCount]);
+
   const handleNext = () => {
-    setSlideCount((nextCount) => (nextCount + 1) % slideImg.length);
+    setSlideCount((nextCount) => (nextCount + 1) % slideLength);
   };
 
   const handlePrev = () => {
-    setSlideCount((prevCount) => (prevCount - 1 + slideImg.length) % slideImg.length);
+    setSlideCount((prevCount) => (prevCount - 1 + slideLength) % slideLength);
   };
 
   const handleNone = () => {
     alert("준비중입니다.")
   }
 
-  const slideStyle = {
-    transform: `translate(-${slideCount * 100}%, 0px)`,
-  };
-
-
   return (
     <>
-      <div className={main.main}>
+      <main className={main.main}>
         <div className={main.first}>
-          <div className={main.slide}>
-            <div className={main.slideBox} style={slideStyle}>
-              {slideImg.map((value, index) => {
-                return <img className={main.slideBoxImg} key={index} src={value} alt={'slide' + index} />
-              })}
+          <section
+            className={main.slide}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            onFocus={() => setIsPaused(true)}
+            onBlur={() => setIsPaused(false)}
+          >
+            <div className={main.slideEyebrow}>{current.eyebrow}</div>
+            <div className={main.slideBody}>
+              <h1 className={main.slideTitle}>{current.title}</h1>
+              <p className={main.slideDesc}>{current.desc}</p>
             </div>
-            <div className={main.slideBtnBox}>
-              <FontAwesomeIcon icon={faChevronLeft} size="lg" color="white" className={main.slideLeftBtn} onClick={handlePrev} />
-              <FontAwesomeIcon icon={faChevronRight} size="lg" color="white" className={main.slideRightBtn} onClick={handleNext} />
+            <A url={current.url} className={main.slideCta}>{current.cta}</A>
+            <div className={main.slideControl}>
+              <span className={main.slideCount}>0{(slideCount % slideLength) + 1} / 0{slideLength}</span>
+              <div className={main.slideBtnBox}>
+                <button type="button" aria-label="이전 슬라이드" className={main.slideBtn} onClick={handlePrev}>‹</button>
+                <button type="button" aria-label="다음 슬라이드" className={main.slideBtn} onClick={handleNext}>›</button>
+              </div>
             </div>
-          </div>
-          <div className={main.recent}>
-            <div className={main.recentTitle}><FontAwesomeIcon icon={faClock} /> 최신작품</div>
-            <div className={main.recentItem}>
-              {recentNovel.map((value, index) => {
-                return (
-                  <A url={"/n/" + value.title} key={index} className={main.recentBox}>
-                    <img className={main.recentImg} src={value.cover_img} alt="최신작품" />
-                    <div className={main.recentName}>{value.title}</div>
-                  </A>
-                )
-              })}
-            </div>
-          </div>
+          </section>
+          <aside className={main.recent}>
+            <h2 className={main.recentTitle}>최신작품</h2>
+            {recentNovel.map((value, index) => {
+              return (
+                <NovelRow
+                  key={index}
+                  compact
+                  url={"/n/" + value.title}
+                  img={value.cover_img}
+                  title={value.title}
+                  sub={value.genre + " · " + value.round + "화"}
+                />
+              )
+            })}
+          </aside>
         </div>
-        <div className={main.second}>
-          <div className={main.popular}>
-            <div className={main.popularTitle}><FontAwesomeIcon icon={faFire} /> 인기작품</div>
-            <div className={main.popularBox}>
-              {popularNovel.map((value, index) => {
-                return (
-                  <A url={"/n/" + value.title} key={index} style={{ 'width': '100%', 'display': 'flex', 'justifyContent': 'center' }}>
-                    <div className={main.popularItem}>
-                      <div className={main.popularCoverImgBox}>
-                        <img className={main.popularCoverImg} src={value.cover_img} alt="커버이미지"></img>
-                      </div>
-                      <div className={main.popularName}>
-                        {value.title}
-                      </div>
+        <section className={main.popular}>
+          <div className={main.popularHead}>
+            <h2 className={main.popularTitle}>인기작품</h2>
+            <A url="/sort" className={main.popularMoreBtn}>더보기</A>
+          </div>
+          <div className={main.popularBox}>
+            {popularNovel.map((value, index) => {
+              return (
+                <A url={"/n/" + value.title} key={index} className={main.popularItem}>
+                  <img className={main.popularCoverImg} src={value.cover_img} alt=""></img>
+                  <div className={main.popularInfo}>
+                    <span className={main.popularRank}>{index + 1}</span>
+                    <div className={main.popularText}>
+                      <div className={main.popularName}>{value.title}</div>
+                      <div className={main.popularGenre}>{value.genre}</div>
                     </div>
-                  </A>
-                )
-              })}
-            </div>
-            <div className={main.popularMore}><A url="/sort" className={main.popularMoreBtn}>더보기</A></div>
+                  </div>
+                </A>
+              )
+            })}
           </div>
-          <div className={main.boxCS}>
-            <A url="/create" className={main.create}><FontAwesomeIcon icon={faMarker} /><span className={main.createText}>작품생성</span></A>
-            <div className={main.submit}>
-              <div onClick={handleNone}><FontAwesomeIcon icon={faPaperPlane} /><span className={main.createText}>투고하기</span></div>
-            </div>
-            <div className={main.declaration}>
-              <div onClick={handleNone}><FontAwesomeIcon icon={faCircleInfo} /><span className={main.createText}>신고하기</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
+        </section>
+        <section className={main.boxCS}>
+          <A url="/create" className={main.action}>
+            <span className={main.actionTitle}>작품생성</span>
+            <span className={main.actionDesc}>새 작품을 등록하고 연재를 시작합니다</span>
+          </A>
+          <button type="button" className={main.action} onClick={handleNone}>
+            <span className={main.actionTitle}>투고하기</span>
+            <span className={main.actionDesc}>공모전 및 원고 투고</span>
+          </button>
+          <button type="button" className={main.action} onClick={handleNone}>
+            <span className={main.actionTitle}>신고하기</span>
+            <span className={main.actionDesc}>부적절한 작품이나 댓글 신고</span>
+          </button>
+        </section>
+      </main>
     </>
   )
 }

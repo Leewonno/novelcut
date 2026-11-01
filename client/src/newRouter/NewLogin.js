@@ -5,12 +5,10 @@ import {LoginProvider} from '../store/login-context';
 
 export default function NewLogin(){
     return <>
-        <div>
-            
-            <div className={login.title}>LOGIN</div>
+        <main className={login.main}>
             <LoginProvider>
                 <LoginBox />
             </LoginProvider>
-        </div>
+        </main>
     </>
 }

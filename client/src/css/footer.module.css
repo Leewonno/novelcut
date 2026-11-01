@@ -1,55 +1,43 @@
-.footer{
-    width: 100%;
-    margin-top: 75px;
-    height: 100px;
-    border-top: 1px solid #e5e5e5;
+.footer {
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+}
+
+.footerBox {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 36px 24px 48px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 14px;
 }
 
-.footerBox{
-    width: 1200px;
-}
-
-.informationBox{
+.informationBox {
     display: flex;
-    margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 13px;
 }
 
-.information{
+.information,
+.informationStrong {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--text-sub);
     cursor: pointer;
-    margin-right: 10px;
-    font-size: 16px;
 }
 
-.myArea{
-    font-size: 18px;
-    font-weight: 600;
-    margin-top: 5px;
+.information:hover {
+    color: var(--ink);
 }
 
-@media (max-width: 600px) {
-    .footerBox{
-        width: 100%;
-        box-sizing: border-box;
-        padding: 20px;
-    }
-    
-    .informationBox{
-        margin-top: 0;
-        justify-content: center;
-        white-space: nowrap;
-    }
-    
-    .information{
-        font-size: 14px;
-        margin-right: 5px;
-    }
-    
-    .myArea{
-        white-space: nowrap;
-        font-size: 15px;
-        justify-content: center;
-        display: flex;
-    }
+.informationStrong {
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.myArea {
+    font-size: 13px;
+    color: var(--text-muted);
 }

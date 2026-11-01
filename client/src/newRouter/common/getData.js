@@ -81,7 +81,7 @@ export async function getStory(id, round) {
 export async function getReconetNovelList() {
     let result = [];
     const docRef = collection(db, "novel");
-    const q = query(docRef, orderBy("create_at", "desc"), limit(2));
+    const q = query(docRef, orderBy("create_at", "desc"), limit(3));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
         result.push(doc.data());

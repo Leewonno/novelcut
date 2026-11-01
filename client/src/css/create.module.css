@@ -1,137 +1,172 @@
 .main {
-    width: 1200px;
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px 112px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
-.genre {
-    margin-bottom: 50px;
+.heading {
+  margin: 0;
+  font-size: clamp(28px, 3.4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
 }
 
-.genreLabel {
-    cursor: pointer;
-    border: 1px solid #e5e5e5;
-    padding: 5px 15px;
-    border-radius: 15px;
-    margin-right: 5px;
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 48px;
 }
 
-.genre input:checked+.genreLabel {
-    background-color: #3f88da;
-    color: white;
+.cover {
+  flex: 0 1 300px;
+  min-width: 220px;
+  aspect-ratio: 3 / 4;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border-radius: 24px;
+  background: var(--fill);
+  overflow: hidden;
+  text-align: center;
+  cursor: pointer;
 }
 
-.title {
-    margin-bottom: 30px;
-}
-
-.titleInput {
-    width: 100%;
-    border: none;
-    border-bottom: 1px solid #e5e5e5;
-    outline: none;
-    font-size: 18px;
-    padding-bottom: 10px;
-    box-sizing: border-box;
-}
-
-.titleInput:focus {
-    border-bottom: 1px solid black;
-}
-
-.summary {
-    margin-bottom: 30px;
-}
-
-.summaryInput {
-    width: 100%;
-    min-height: 300px;
-    outline: none;
-    resize: none;
-    font-size: 17px;
-    font-family: 'SUIT-Regular';
-    border: 1px solid #e5e5e5;
-    padding: 10px;
-    box-sizing: border-box;
-}
-
-.summaryInput:focus {
-    border: 1px solid black;
+.cover:hover {
+  background: #EAEAEA;
 }
 
 .coverImg {
-    margin-bottom: 50px;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.coverLabel {
-    display: block;
-    width: 100%;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    box-sizing: border-box;
-    border: 1px solid #e5e5e5;
-    text-align: center;
-    color: #a7a7a7;
-    font-size: 18px;
-    cursor: pointer;
-    transition: all 0.15s;
-    margin-bottom: 5px;
+.coverChange {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 600;
 }
 
-.coverLabel:hover {
-    border: 1px solid black;
-    color: black;
+.coverPlus {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #FFFFFF;
 }
 
-.coverImgUrl {
-    width: 190px;
-    height: 150px;
-    object-fit: cover;
-    border: 1px solid #e5e5e5;
-    margin-bottom: 10px;
+.coverText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-
-.saveBtnBox {
-    display: flex;
-    justify-content: flex-end;
+.coverTitle {
+  font-size: 16px;
+  font-weight: 700;
 }
 
-.saveBtn {
-    border: 1px solid #e5e5e5;
-    background-color: #3f88da;
-    padding: 10px 30px;
-    font-size: 18px;
-    color: white;
-    border-radius: 25px;
-    cursor: pointer;
+.coverHint {
+  font-size: 13px;
+  color: var(--text-faint);
 }
 
+.fields {
+  flex: 1 1 480px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.labelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.count {
+  font-size: 13px;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.genre {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.genreLabel,
+.genreActive {
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--fill);
+  color: var(--text-sub);
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.genreActive {
+  background: var(--ink);
+  color: #FFFFFF;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
 
 @media (max-width: 600px) {
-    .main {
-        width: 100%;
-        padding: 0px 20px;
-        box-sizing: border-box;
-    }
+  .main {
+    padding: 32px 16px 64px;
+    gap: 24px;
+  }
 
-    .genre {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-        margin-bottom: 25px;
-    }
+  .form {
+    gap: 28px;
+  }
 
-    .genreLabel {
-        background-color: #fff;
-        white-space: nowrap;
-        margin-right: 0;
-    }
+  .cover {
+    flex: 0 1 240px;
+    margin: 0 auto;
+  }
 
-    .title {
-        margin-bottom: 30px;
-    }
-
-    .coverLabel {
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
+  .fields {
+    flex-basis: 100%;
+  }
 }

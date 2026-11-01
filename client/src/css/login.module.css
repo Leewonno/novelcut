@@ -1,81 +1,91 @@
-.title {
-    font-size: 25px;
-    font-weight: 600;
+.main {
+    flex: 1;
     display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-/* .login{
-
-} */
-
-.box {
-    width: 450px;
-    min-height: 300px;
-    border: 1px solid #e5e5e5;
-    display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    border-radius: 5px;
-    box-shadow: 0 5px 8px 0 rgba(68, 68, 68, .02);
+    padding: 80px 24px 112px;
+}
+
+.box {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.head {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+}
+
+.title {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+}
+
+.desc {
+    margin: 0;
+    font-size: 15px;
+    color: var(--text-muted);
 }
 
 .input_box {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-bottom: 35px;
+    gap: 10px;
 }
 
-.input {
-    outline: none;
-    width: 300px;
-    height: 40px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border: 1px solid #e5e5e5;
+.error {
+    padding: 2px 24px 0;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 .button_box {
-    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .login_btn {
-    width: 320px;
-    height: 35px;
-    cursor: pointer;
-    background-color: #6b7280;
-    color: white;
-    border: none;
+    composes: primaryBtnLarge from "./form.module.css";
+    width: 100%;
 }
 
 .signup_box {
-    margin-bottom: 20px;
-}
-
-.signup_box a {
-    color: rgb(96, 96, 96);
-    margin-left: 10px;
-    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
     font-size: 14px;
 }
 
+.link,
+.link:hover {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--text-sub);
+    cursor: pointer;
+}
+
+.link:hover {
+    color: var(--ink);
+}
+
+.divider {
+    width: 1px;
+    height: 12px;
+    background: #DDDDDD;
+}
+
 @media (max-width: 600px) {
-    .title {
-        font-size: 25px;
-    }
-
-    .box {
-        width: 100%;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-
-    .input_box {
-        width: 100%;
+    .main {
+        padding: 48px 16px 64px;
     }
 }

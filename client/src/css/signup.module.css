@@ -1,88 +1,194 @@
-.box {
-    width: 450px;
-    min-height: 400px;
-    border: 1px solid #e5e5e5;
+.main {
+    flex: 1;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    border-radius: 5px;
-    box-shadow: 0 5px 8px 0 rgba(68, 68, 68, .02);
+    padding: 80px 24px 112px;
 }
 
-.input {
-    outline: none;
-    width: 300px;
-    height: 40px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border: 1px solid #e5e5e5;
-    box-sizing: border-box;
+.box {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.progress {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.progressHead {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.stepLabel {
+    color: var(--text-faint);
+    font-variant-numeric: tabular-nums;
+}
+
+.bars {
+    display: flex;
+    gap: 6px;
+}
+
+.bar,
+.barOn {
+    flex: 1;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--line);
+}
+
+.barOn {
+    background: var(--ink);
+}
+
+.question {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .title {
-    font-size: 25px;
-    font-weight: 600;
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.3;
+    text-wrap: balance;
+}
+
+.help {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+.inputBox {
     display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-.signupBtn {
-    width: 300px;
-    background-color: #6b7280;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: white;
-    border: none;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    cursor: pointer;
-    margin-top: 20px;
-}
-
-.cancelBtn {
-    width: 300px;
-    background-color: white;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: black;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    cursor: pointer;
-    margin-top: 10px;
-    border: 1px solid #6b7280;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .alarmText {
-    width: 300px;
-    font-size: 12px;
-    color: #6b7280;
+    padding: 2px 26px 0;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.btnRow {
+    display: flex;
+    gap: 10px;
+}
+
+.nextBtn {
+    composes: primaryBtnLarge from "./form.module.css";
+    flex: 1;
+}
+
+.loginText {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.loginLink {
+    font-weight: 700;
+}
+
+.done {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    text-align: center;
+}
+
+.check {
+    width: 64px;
+    height: 64px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #FFFFFF;
+}
+
+.doneDesc {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.summary {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 8px 24px;
+    border-radius: 24px;
+    background: var(--surface);
+    text-align: left;
+}
+
+.summaryRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0;
+    font-size: 15px;
+}
+
+.summaryLabel {
+    flex-shrink: 0;
+    color: var(--text-muted);
+}
+
+.summaryValue {
+    min-width: 0;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+    text-align: right;
+}
+
+.doneBtn,
+.doneBtn:hover {
+    width: 100%;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.doneBtn:hover {
+    background: var(--ink-hover);
 }
 
 @media (max-width: 600px) {
-    .box {
-        width: 100%;
-        box-sizing: border-box;
-        padding: 20px;
-    }
-
-    .input {
-        width: 100%;
+    .main {
+        padding: 48px 16px 64px;
     }
 
     .title {
-        font-size: 25px;
+        font-size: 26px;
     }
-
-    .signupBtn {
-        width: 100%;
-    }
-
-    .cancelBtn {
-        width: 100%;
-    }
-
 }

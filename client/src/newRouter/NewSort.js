@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import sort from "../css/sort.module.css";
-import A from "../atom/A";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFire } from "@fortawesome/free-solid-svg-icons";
-import { faClock } from "@fortawesome/free-solid-svg-icons";
+import NovelRow from "../molecule/NovelRow";
 import { getSortData } from "./common/getData";
 
 export default function NewSort() {
@@ -22,47 +19,19 @@ export default function NewSort() {
   }, [])
 
   return <>
-    <div className={sort.sort}>
-      <div className={sort.popularBox}>
-        <div className={sort.popularTitle}><FontAwesomeIcon icon={faFire} /> 인기작품</div>
+    <main className={sort.sort}>
+      <section className={sort.section}>
+        <h2 className={sort.title}>인기작품</h2>
         {novelList.map((value, index) => {
-          return (
-            <A url={"/n/" + value.title} key={index}>
-              <div className={sort.popularItem}>
-                <div className={sort.popularImgBox}>
-                  <img className={sort.popularImg} src={value.cover_img} alt="커버사진"></img>
-                </div>
-                <div className={sort.popularNameBox}>
-                  <div className={sort.popularName}>{value.title}</div>
-                  <div className={sort.popularWriterName}>{value.write_name}</div>
-                </div>
-              </div>
-            </A>
-          )
+          return <NovelRow key={index} rank={index + 1} url={"/n/" + value.title} img={value.cover_img} title={value.title} sub={value.write_name} />
         })}
-      </div>
-      <div className={sort.recentBox}>
-        <div className={sort.recentTitle}><FontAwesomeIcon icon={faClock} /> 최신 연재 회차</div>
+      </section>
+      <section className={sort.section}>
+        <h2 className={sort.title}>최신 연재 회차</h2>
         {roundList.map((value, index) => {
-          return (
-            <A key={index} url={"/n/" + value.title + "/detail?round=" + value.round}>
-              <div className={sort.recentItem}>
-                <div className={sort.recentImgBox}>
-                  <img className={sort.recentImg} src={value.cover_img} alt="커버사진"></img>
-                </div>
-                <div className={sort.recentTextBox}>
-                  <div className={sort.recentNovelTitle}>{value.title}</div>
-                  <div className={sort.recentNameBox}>
-                    {/* <div className={sort.recentName}>{value.title}</div> */}
-                    {/* <div className={sort.recentName}>|</div> */}
-                    <div className={sort.recentWriterName}>{value.write_name}</div>
-                  </div>
-                </div>
-              </div>
-            </A>
-          )
+          return <NovelRow key={index} url={value.round > 0 ? "/n/" + value.title + "/detail?round=" + value.round : "/n/" + value.title} img={value.cover_img} title={value.title} sub={value.write_name} />
         })}
-      </div>
-    </div>
+      </section>
+    </main>
   </>
 }

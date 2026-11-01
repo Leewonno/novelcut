@@ -1,0 +1,31 @@
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 80px 24px 112px;
+    text-align: center;
+}
+
+.title {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+}
+
+.home,
+.home:hover {
+    padding: 12px 22px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.home:hover {
+    background: var(--ink-hover);
+}

@@ -1,185 +1,247 @@
 .novelinfo {
-    width: 1200px;
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
 }
 
 .infoBox {
-    width: 100%;
-    display: flex;
-    margin-bottom: 100px;
-    /* border: 1px solid #e5e5e5; */
-    /* padding: 15px; */
-    /* box-sizing: border-box; */
-}
-
-.coverBox {
-    width: 300px;
-    height: 240px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 48px;
 }
 
 .coverImg {
-    width: 300px;
-    height: 240px;
-    border: 1px solid #e5e5e5;
-    object-fit: cover;
-    border-radius: 5px;
+  flex: 0 1 300px;
+  min-width: 220px;
+  aspect-ratio: 3 / 4;
+  border-radius: 24px;
+  background: var(--cover);
+  object-fit: cover;
 }
 
 .dataBox {
-    margin-left: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  flex: 1 1 480px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-top: 8px;
+}
+
+.dataBoxTop {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tagBox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--fill);
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .name {
-    font-size: 30px;
-    font-weight: 600;
-    margin-bottom: 10px;
+  margin: 0;
+  font-size: clamp(30px, 3.6vw, 44px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
 }
 
-.data {
-    display: flex;
-}
-
-.dataText {
-    font-size: 15px;
-    margin-right: 5px;
-    color: #9d9c9c;
+.writer {
+  font-size: 15px;
+  color: var(--text-sub);
 }
 
 .summary {
-    font-size: 15px;
-    color: #9d9c9c;
+  margin: 0;
+  max-width: 680px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-body);
+  text-wrap: pretty;
+  white-space: pre-wrap;
 }
 
 .btnBox {
-    display: flex;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.firstRound {
-    margin-top: 10px;
-    padding: 10px 30px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #9d9c9c;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin-right: 10px;
+.firstRound,
+.firstRound:hover {
+  padding: 15px 32px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 700;
 }
 
-.writerBox {
-    display: flex;
+.firstRound:hover {
+  background: var(--ink-hover);
 }
 
 .editRound {
-    margin-top: 10px;
-    padding: 10px 30px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #ffffff;
-    color: rgb(106, 106, 106);
-    border: none;
-    border-radius: 5px;
-    border: 1px solid #e5e5e5;
-    margin-right: 10px;
+  padding: 15px 28px;
+  border-radius: 999px;
+  background: var(--fill);
+  font-size: 15px;
+  font-weight: 600;
 }
 
-.deleteRound {
-    margin-top: 10px;
-    padding: 10px 40px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #ffffff;
-    color: rgb(255, 0, 0);
-    border: none;
-    border-radius: 5px;
-    border: 1px solid #e5e5e5;
-    margin-right: 10px;
+.editRound:hover {
+  background: var(--fill-hover);
+  color: var(--ink);
+}
+
+.rounds {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.roundHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 8px;
 }
 
 .roundInfo {
-    font-size: 25px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #e5e5e5;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.roundCount {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-faint);
+}
+
+.toggle {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--fill);
+}
+
+.toggleBtn,
+.toggleActive {
+  padding: 7px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-sub);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.toggleActive {
+  background: var(--ink);
+  color: #FFFFFF;
+}
+
+.roundList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .roundItem {
-    display: flex;
-    align-items: center;
-    height: 75px;
-    font-size: 20px;
-    color: black;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #e5e5e5;
-    padding-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 0 -12px;
+  padding: 12px;
+  border-radius: 20px;
+}
+
+.roundItem:hover {
+  background: var(--row-hover);
+  color: var(--ink);
 }
 
 .roundImg {
-    height: 75px;
-    width: 95px;
-    object-fit: cover;
-    border-radius: 2.5px;
-    margin-right: 15px;
+  width: 120px;
+  flex-shrink: 0;
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  background: var(--cover);
+  object-fit: cover;
+}
+
+.roundText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .round {
-    margin-right: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
 }
 
-.title:hover {
-    text-decoration: underline;
+.title {
+  font-size: 17px;
+  font-weight: 600;
 }
-
 
 @media (max-width: 600px) {
-    .novelinfo {
-        width: 100%;
-        box-sizing: border-box;
-        padding: 0px 20px;
-    }
+  .novelinfo {
+    padding: 24px 16px 64px;
+    gap: 48px;
+  }
 
-    .infoBox {
-        flex-direction: column;
-        gap: 20px;
-    }
+  .infoBox {
+    gap: 24px;
+  }
 
-    .coverBox {
-        width: 100%;
-    }
+  .coverImg {
+    flex: 0 1 240px;
+    margin: 0 auto;
+  }
 
-    .coverImg {
-        width: 100%;
-    }
+  .dataBox {
+    flex-basis: 100%;
+    padding-top: 0;
+  }
 
-    .dataBox {
-        margin-left: 0px;
-    }
+  .roundImg {
+    width: 88px;
+  }
 
-    .data {
-        margin-bottom: 10px;
-    }
-
-    .firstRound {
-        font-size: 14px;
-        padding: 10px 20px;
-    }
-
-    .editRound {
-        font-size: 14px;
-        padding: 10px 20px;
-    }
-
-    .roundInfo {
-        font-size: 20px;
-    }
-
-    .roundItem {
-        font-size: 18px;
-    }
-
-    .name {
-        font-size: 25px;
-    }
+  .roundItem {
+    gap: 16px;
+  }
 }

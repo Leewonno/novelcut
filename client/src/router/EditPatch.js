@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios"
 import LoginStateContext from '../store/loginState-context';
 import edit from '../css/edit.module.css';
+import form from '../css/form.module.css';
 
 export default function EditPatch(){
 
@@ -85,22 +86,26 @@ export default function EditPatch(){
 
 
     return <>
-        <div className={edit.edit}>
-            <div>
-                <div className={edit.novelName} style={{fontWeight:600}}>{novelName}</div>
+        <main className={edit.edit}>
+            <div className={edit.headingBox}>
+                <span className={edit.roundLabel}>{round}화 수정</span>
+                <h1 className={edit.novelName}>{novelName}</h1>
             </div>
-            <div className={edit.title}>
-                <input placeholder="회차 제목" value={title} onChange={(e)=>setTitle(e.target.value)} className={edit.titleInput}></input>
-            </div>
-            <div className={edit.content}>
-                <textarea className={edit.contentInput} spellCheck={false} onChange={(e)=>handleContent(e)} value={content}></textarea>
-            </div>
-            <div className={edit.writerComment}>
-                <textarea placeholder="작가의 말" className={edit.writerCommentInput} spellCheck={false} onChange={(e)=>setWriterComment(e.target.value)} value={writerComment}></textarea>
-            </div>
+            <input placeholder="회차 제목" aria-label="회차 제목" value={title} onChange={(e)=>setTitle(e.target.value)} className={form.inputLarge}></input>
+            <label className={edit.field}>
+                <span className={edit.labelRow}>
+                    <span className={edit.label}>본문</span>
+                    <span className={edit.count}>{content.length.toLocaleString()}자</span>
+                </span>
+                <textarea rows={18} className={form.textareaBody} spellCheck={false} onChange={(e)=>handleContent(e)} value={content}></textarea>
+            </label>
+            <label className={edit.field}>
+                <span className={edit.label}>작가의 말</span>
+                <textarea placeholder="작가의 말" rows={4} className={form.textareaNote} spellCheck={false} onChange={(e)=>setWriterComment(e.target.value)} value={writerComment}></textarea>
+            </label>
             <div className={edit.saveBtnBox}>
-                <button className={edit.saveBtn} onClick={handleRoundUpdate}>수정</button>
+                <button type="button" className={form.primaryBtn} onClick={handleRoundUpdate}>수정</button>
             </div>
-        </div>
+        </main>
     </>
 }

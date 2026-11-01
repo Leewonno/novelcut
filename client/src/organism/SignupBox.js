@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Check } from "akar-icons";
 import A from "../atom/A";
 import form from "../css/form.module.css";
 import signup from "../css/signup.module.css";
@@ -97,7 +98,7 @@ export default function SingupBox(){
             <div className={signup.box}>
                 <div className={signup.done}>
                     <div className={signup.check}>
-                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+                        <Check size={26} strokeWidth={2.6} aria-hidden="true" />
                     </div>
                     <div className={signup.doneDesc}>
                         <h1 className={signup.title}>{values.nick}님, 환영합니다</h1>

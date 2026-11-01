@@ -1,5 +1,6 @@
 import { useEffect, useContext, useState } from "react"
 import { useNavigate } from "react-router-dom";
+import { ChevronDown, Plus } from "akar-icons";
 import A from "../atom/A"
 import LoginStateContext from '../store/loginState-context';
 import edit from '../css/edit.module.css';
@@ -103,10 +104,10 @@ export default function NewEdit() {
               return <option key={index} value={value.title}>{value.title}</option>
             })}
           </select>
-          <svg className={edit.chevron} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+          <ChevronDown className={edit.chevron} size={14} color="#111111" strokeWidth={2.4} aria-hidden="true" />
         </div>
         <A url="/create" className={edit.newNovel}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+          <Plus size={14} strokeWidth={2.4} aria-hidden="true" />
           새 작품
         </A>
       </div>

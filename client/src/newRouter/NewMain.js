@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "akar-icons";
 import main from "../css/main.module.css";
 import A from "../atom/A";
 import NovelRow from "../molecule/NovelRow";
@@ -15,7 +16,6 @@ const contestSlide = {
 export default function NewMain() {
 
   const [slideCount, setSlideCount] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const [recentNovel, setRecentNovel] = useState([]);
   const [popularNovel, setPopularNovel] = useState([]);
 
@@ -44,17 +44,6 @@ export default function NewMain() {
     getPopularData();
   }, []);
 
-  // 슬라이드 위에 마우스나 포커스가 있으면 멈추고, 수동으로 넘기면 타이머를 다시 시작한다
-  useEffect(() => {
-    if (isPaused) {
-      return;
-    }
-    const timer = setInterval(() => {
-      setSlideCount((nextCount) => (nextCount + 1) % slideLength);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [slideLength, isPaused, slideCount]);
-
   const handleNext = () => {
     setSlideCount((nextCount) => (nextCount + 1) % slideLength);
   };
@@ -71,13 +60,7 @@ export default function NewMain() {
     <>
       <main className={main.main}>
         <div className={main.first}>
-          <section
-            className={main.slide}
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-            onFocus={() => setIsPaused(true)}
-            onBlur={() => setIsPaused(false)}
-          >
+          <section className={main.slide}>
             <div className={main.slideEyebrow}>{current.eyebrow}</div>
             <div className={main.slideBody}>
               <h1 className={main.slideTitle}>{current.title}</h1>
@@ -87,8 +70,8 @@ export default function NewMain() {
             <div className={main.slideControl}>
               <span className={main.slideCount}>0{(slideCount % slideLength) + 1} / 0{slideLength}</span>
               <div className={main.slideBtnBox}>
-                <button type="button" aria-label="이전 슬라이드" className={main.slideBtn} onClick={handlePrev}>‹</button>
-                <button type="button" aria-label="다음 슬라이드" className={main.slideBtn} onClick={handleNext}>›</button>
+                <button type="button" aria-label="이전 슬라이드" className={main.slideBtn} onClick={handlePrev}><ChevronLeft size={16} aria-hidden="true" /></button>
+                <button type="button" aria-label="다음 슬라이드" className={main.slideBtn} onClick={handleNext}><ChevronRight size={16} aria-hidden="true" /></button>
               </div>
             </div>
           </section>

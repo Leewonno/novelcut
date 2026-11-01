@@ -1,5 +1,6 @@
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from "react"
+import { ChevronLeft, ChevronRight } from "akar-icons";
 import novel from "../css/novel.module.css";
 import A from '../atom/A';
 import { getStory } from './common/getData';
@@ -74,8 +75,8 @@ export default function NewNovel() {
       </div>
       <section className={novel.slide}>
         <p className={novel.slideContent}>{content[slideCount]}</p>
-        <button type="button" aria-label="이전 페이지" className={novel.slideLeftBtn} disabled={slideCount === 0} onClick={() => setSlideCount(slideCount - 1)}>‹</button>
-        <button type="button" aria-label="다음 페이지" className={novel.slideRightBtn} disabled={slideCount >= lastPage} onClick={() => setSlideCount(slideCount + 1)}>›</button>
+        <button type="button" aria-label="이전 페이지" className={novel.slideLeftBtn} disabled={slideCount === 0} onClick={() => setSlideCount(slideCount - 1)}><ChevronLeft size={20} aria-hidden="true" /></button>
+        <button type="button" aria-label="다음 페이지" className={novel.slideRightBtn} disabled={slideCount >= lastPage} onClick={() => setSlideCount(slideCount + 1)}><ChevronRight size={20} aria-hidden="true" /></button>
       </section>
       <div className={novel.control}>
         <span className={novel.page}>{content.length > 0 ? slideCount + 1 : 0} / {content.length}</span>

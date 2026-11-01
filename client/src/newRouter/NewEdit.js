@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import A from "../atom/A"
 import LoginStateContext from '../store/loginState-context';
 import edit from '../css/edit.module.css';
+import form from '../css/form.module.css';
 import { getNovelList } from "./common/getData";
 import { createStory } from "./common/postData";
 
@@ -20,6 +21,8 @@ export default function NewEdit() {
   const [content, setContent] = useState("");
   const [writerComment, setWriterComment] = useState("");
 
+  const isReady = novelId !== '' && title.length > 0 && content.length >= 100 && writerComment.length > 0;
+
   useEffect(() => {
     const loadList = async () => {
       const res = await getNovelList(id);
@@ -31,6 +34,12 @@ export default function NewEdit() {
   }, [login])
 
   const handleSelect = (e) => {
+    if (e.target.value === '') {
+      setNovelId('');
+      setNovelName("작품을 선택해주세요.");
+      setNovelRound(0);
+      return;
+    }
     novelList.forEach(element => {
       if (element.title === e.target.value) {
         setNovelId(element.title);
@@ -65,7 +74,7 @@ export default function NewEdit() {
       return;
     }
 
-    if (writerComment < 1) {
+    if (writerComment.length < 1) {
       alert("작가의 말을 입력해주세요!");
       return;
     }
@@ -85,35 +94,41 @@ export default function NewEdit() {
 
 
   return <>
-    <div className={edit.edit}>
+    <main className={edit.edit}>
       <div className={edit.novelSelectBox}>
-        <div>
-          <select onChange={(e) => handleSelect(e)} className={edit.novelSelect}>
-            <option value={0}>선택</option>
+        <div className={edit.selectWrap}>
+          <select aria-label="작품 선택" value={novelId} onChange={(e) => handleSelect(e)} className={edit.novelSelect}>
+            <option value="">작품 선택</option>
             {novelList.map((value, index) => {
               return <option key={index} value={value.title}>{value.title}</option>
             })}
           </select>
+          <svg className={edit.chevron} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
         </div>
-        <div>
-          <A url="/create" className={edit.newNovel}>새 작품</A>
-        </div>
+        <A url="/create" className={edit.newNovel}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+          새 작품
+        </A>
       </div>
-      <div>
-        <div className={edit.novelName}>{novelName}</div>
+      <div className={edit.headingBox}>
+        {novelId !== '' ? <span className={edit.roundLabel}>{novelRound}화 등록</span> : <></>}
+        <h1 className={edit.novelName}>{novelName}</h1>
       </div>
-      <div className={edit.title}>
-        <input placeholder="회차 제목" value={title} onChange={(e) => setTitle(e.target.value)} className={edit.titleInput}></input>
-      </div>
-      <div className={edit.content}>
-        <textarea className={edit.contentInput} spellCheck={false} onChange={(e) => handleContent(e)}></textarea>
-      </div>
-      <div className={edit.writerComment}>
-        <textarea placeholder="작가의 말" className={edit.writerCommentInput} spellCheck={false} onChange={(e) => setWriterComment(e.target.value)}></textarea>
-      </div>
+      <input placeholder="회차 제목" aria-label="회차 제목" value={title} onChange={(e) => setTitle(e.target.value)} className={form.inputLarge}></input>
+      <label className={edit.field}>
+        <span className={edit.labelRow}>
+          <span className={edit.label}>본문</span>
+          <span className={edit.count}>{content.length.toLocaleString()}자</span>
+        </span>
+        <textarea placeholder="이야기를 시작해보세요" rows={18} className={form.textareaBody} spellCheck={false} value={content} onChange={(e) => handleContent(e)}></textarea>
+      </label>
+      <label className={edit.field}>
+        <span className={edit.label}>작가의 말</span>
+        <textarea placeholder="작가의 말" rows={4} className={form.textareaNote} spellCheck={false} value={writerComment} onChange={(e) => setWriterComment(e.target.value)}></textarea>
+      </label>
       <div className={edit.saveBtnBox}>
-        <button className={edit.saveBtn} onClick={handleRoundSave}>저장</button>
+        <button type="button" className={`${form.primaryBtn} ${isReady ? "" : form.idle}`} onClick={handleRoundSave}>저장</button>
       </div>
-    </div>
+    </main>
   </>
 }

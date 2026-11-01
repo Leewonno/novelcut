@@ -1,25 +1,71 @@
-@font-face {
-  font-family: 'SUIT-Regular';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
+:root {
+  --ink: #111111;
+  --ink-hover: #333333;
+  --text-body: #444444;
+  --text-sub: #555555;
+  --text-muted: #777777;
+  --text-faint: #888888;
+  --text-placeholder: #999999;
+  --idle: #BBBBBB;
+  --line: #E5E5E5;
+  --line-soft: #EEEEEE;
+  --fill: #F2F2F2;
+  --fill-hover: #E5E5E5;
+  --row-hover: #F5F5F5;
+  --surface: #F7F7F7;
+  --cover: #D6D6D6;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: 'SUIT-Regular', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  background: #FFFFFF;
+  color: var(--ink);
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+  letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
 }
 
-#root{
+a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--text-sub);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-placeholder);
+}
+
+a:focus-visible,
+button:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+#root {
   width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 code {

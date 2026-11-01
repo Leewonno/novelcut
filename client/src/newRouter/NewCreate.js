@@ -1,9 +1,14 @@
 import { useContext, useState } from "react";
 import create from "../css/create.module.css";
+import form from "../css/form.module.css";
+import A from "../atom/A";
+import CoverUpload from "../molecule/CoverUpload";
 import { useNavigate } from "react-router-dom";
 import LoginStateContext from '../store/loginState-context';
 import { createNovel } from "./common/postData";
 import { uploadCover } from "./common/upload";
+
+const genres = ["로맨스", "판타지", "무협", "라이트노벨", "일반"];
 
 export default function NewCreate() {
 
@@ -11,12 +16,14 @@ export default function NewCreate() {
   const { writeName, id } = login;
   const navigate = useNavigate();
 
-  const [fileName, setFileName] = useState('');
   const [fileUrl, setFileUrl] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
 
   const [title, setTitle] = useState('');
   const [summary, setSummary] = useState('');
   const [genre, setGenre] = useState('');
+
+  const isReady = title.length > 0 && summary.length >= 30 && genre.length > 0 && fileUrl !== "";
 
   // 저장
   const handleSave = async () => {
@@ -67,6 +74,9 @@ export default function NewCreate() {
 
   const handleCover = async (e) => {
     const file = e.target.files[0];
+    if (!file) {
+      return;
+    }
     const fileExt = file.name.split('.').pop();
 
     // 확장자 제한
@@ -74,12 +84,18 @@ export default function NewCreate() {
       alert('jpg, png, jpg, webp 파일만 업로드가 가능합니다.');
       return;
     }
-    const name = e.target.files[0].name;
-    setFileName(name);
 
     // 커버 이미지 업로드
-    const path = await uploadCover(name, file);
-    setFileUrl(path);
+    setIsUploading(true);
+    try {
+      const path = await uploadCover(file.name, file);
+      setFileUrl(path);
+    } catch (error) {
+      console.error("커버 이미지 업로드 실패:", error);
+      alert("커버 이미지 업로드에 실패했습니다.");
+    } finally {
+      setIsUploading(false);
+    }
   }
 
   const handleFileInput = (e) => {
@@ -90,39 +106,36 @@ export default function NewCreate() {
   }
 
   return <>
-    <div className={create.main}>
-      <div className={create.genre}>
-        <input type="radio" name="genre" id="romance" value={"로맨스"} hidden onClick={(e) => setGenre(e.target.value)}></input>
-        <label htmlFor="romance" className={create.genreLabel}>로맨스</label>
-        <input type="radio" name="genre" id="fantasy" value={"판타지"} hidden onClick={(e) => setGenre(e.target.value)}></input>
-        <label htmlFor="fantasy" className={create.genreLabel}>판타지</label>
-        <input type="radio" name="genre" id="oriental" value={"무협"} hidden onClick={(e) => setGenre(e.target.value)}></input>
-        <label htmlFor="oriental" className={create.genreLabel}>무협</label>
-        <input type="radio" name="genre" id="lightnovel" value={"라이트노벨"} hidden onClick={(e) => setGenre(e.target.value)}></input>
-        <label htmlFor="lightnovel" className={create.genreLabel}>라이트노벨</label>
-        <input type="radio" name="genre" id="normal" value={"일반"} hidden onClick={(e) => setGenre(e.target.value)}></input>
-        <label htmlFor="normal" className={create.genreLabel}>일반</label>
+    <main className={create.main}>
+      <h1 className={create.heading}>작품생성</h1>
+      <div className={create.form}>
+        <CoverUpload url={fileUrl} isUploading={isUploading} onClick={handleFileInput} onChange={handleCover} />
+        <div className={create.fields}>
+          <div className={create.field}>
+            <span className={create.label}>장르</span>
+            <div className={create.genre}>
+              {genres.map((value) => {
+                return <button type="button" key={value} aria-pressed={genre === value} className={genre === value ? create.genreActive : create.genreLabel} onClick={() => setGenre(value)}>{value}</button>
+              })}
+            </div>
+          </div>
+          <label className={create.field}>
+            <span className={create.label}>작품 제목</span>
+            <input type="text" placeholder="작품 제목" className={form.inputLarge} value={title} onChange={(e) => setTitle(e.target.value)}></input>
+          </label>
+          <label className={create.field}>
+            <span className={create.labelRow}>
+              <span className={create.label}>줄거리</span>
+              <span className={create.count}>{summary.length}자</span>
+            </span>
+            <textarea placeholder="줄거리" rows={9} className={form.textarea} value={summary} onChange={(e) => setSummary(e.target.value)}></textarea>
+          </label>
+          <div className={create.actions}>
+            <A url="/" className={form.secondaryBtn}>취소</A>
+            <button type="button" className={`${form.primaryBtn} ${isReady ? "" : form.idle}`} onClick={handleSave}>저장</button>
+          </div>
+        </div>
       </div>
-      <div className={create.title}>
-        <input type="text" placeholder="작품 제목" className={create.titleInput} value={title} onChange={(e) => setTitle(e.target.value)}></input>
-      </div>
-      <div className={create.summary}>
-        <textarea placeholder="줄거리" className={create.summaryInput} value={summary} onChange={(e) => setSummary(e.target.value)}></textarea>
-      </div>
-      <div className={create.coverImg}>
-        {
-          fileUrl ?
-            <img alt="커버" src={fileUrl} className={create.coverImgUrl} />
-            :
-            <></>
-        }
-        <label onClick={handleFileInput} htmlFor="cover" className={create.coverLabel}>커버 이미지 업로드</label>
-        <div>{fileName}</div>
-        <input accept="image/*" type="file" id="cover" hidden onChange={(e) => handleCover(e)}></input>
-      </div>
-      <div className={create.saveBtnBox}>
-        <button className={create.saveBtn} onClick={handleSave}>저장</button>
-      </div>
-    </div>
+    </main>
   </>
 }

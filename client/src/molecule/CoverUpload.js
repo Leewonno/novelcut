@@ -1,3 +1,4 @@
+import { Plus } from "akar-icons";
 import create from "../css/create.module.css";
 
 export default function CoverUpload(props){
@@ -12,7 +13,7 @@ export default function CoverUpload(props){
             ) : (
                 <>
                     <span className={create.coverPlus}>
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+                        <Plus size={22} strokeWidth={2.4} aria-hidden="true" />
                     </span>
                     <span className={create.coverText}>
                         <span className={create.coverTitle}>{props.isUploading ? "업로드 중..." : "커버 이미지 업로드"}</span>
